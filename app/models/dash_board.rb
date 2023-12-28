@@ -1,0 +1,2 @@
+class DashBoard < ApplicationRecord
+end
