@@ -3,12 +3,18 @@ include HTTParty
 
 URL = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=IBM&apikey=demo"
 
-def getData
- data = HTTParty.get(URL)
+        def getData
+        data = HTTParty.get(URL)
 
-return render json:{data:data},status: :ok
+        if data.success?
 
-end
+            render json:data,status:200
+
+        else
+            render json:"Erro na requisição",status:404
+        end
+
+        end
 
 
 
