@@ -13,6 +13,7 @@ class UserController < ApplicationController
 
         @user = User.create(user_params)
 
+      
         if @user.valid?
 
             token = encode_Token({user_id:@user.id})
@@ -49,7 +50,7 @@ class UserController < ApplicationController
     def user_params
 
         params.permit(:name,:email,:password)
-
+    
     end
 
 end
