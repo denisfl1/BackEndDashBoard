@@ -7,7 +7,7 @@ class UserController < ApplicationController
 
         if search
 
-            return render json:{error:"Usuário já existe"}, status:404
+            return render json:{error:"Usuário já existe"},status:404
 
         end
 
