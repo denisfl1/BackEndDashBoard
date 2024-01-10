@@ -11,6 +11,7 @@ class ApplicationController < ActionController::API
 
         auth_header = request.headers["Authorization"]
 
+
         if auth_header
 
             token = auth_header.split(' ').last
@@ -25,7 +26,7 @@ class ApplicationController < ActionController::API
 
             end
             
-
+            
     end
 
     end
@@ -35,9 +36,21 @@ class ApplicationController < ActionController::API
         decode_token = decode_Token()
 
         if decode_token
-            user_id = decoded_token[0]['user_id']
-            @user = User.find_by(id:user_id)
+            user = decode_token[0]["id"]
+            @user = User.find_by(id:user)
+           
+        end
 
+    end
+
+    def check_admin
+
+        decode_token = decode_Token()
+
+        if decode_token
+            user = decode_token[0]["id"]
+            @user = User.find_by(id:user).admin?
+           
         end
 
     end
@@ -48,5 +61,13 @@ class ApplicationController < ActionController::API
         render json:{message:"Você não está autenticado"},status:401 unless authorized_user
 
     end
+
+
+    def authorize_admin
+
+        render json:{message:"Você não está autenticado"},status:401 unless authorized_user
+
+    end
+  
 
 end

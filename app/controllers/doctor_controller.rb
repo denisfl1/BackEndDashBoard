@@ -1,5 +1,5 @@
 class DoctorController < ApplicationController
-
+before_action :authorize ,only:[:getDoctors]
 
     def createDoctor
         

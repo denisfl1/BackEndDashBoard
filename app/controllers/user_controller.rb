@@ -26,13 +26,40 @@ class UserController < ApplicationController
         end
     end
 
+        def register_admin
+
+            search = User.find_by(email:user_params[:email])
+
+            if search
+    
+                return render json:{error:"Usuário já existe"},status:404
+    
+            end
+            
+            
+            @user2 = User.create(user_params_admin)
+
+      
+            if @user2.valid?
+    
+                token = encode_Token({user:@user2})
+                render json:"Criado com sucesso",status:200
+    
+            else
+                render json:{error:"Usuário ou senha inválidos"},
+                status: 404
+            
+            end
+
+        end
+
        
         def login
 
             @user = User.find_by(email:user_params[:email])
 
             if @user && @user.authenticate(user_params[:password])
-                token = encode_Token({id:@user.id,name:@user.name,email:@user.email})
+                token = encode_Token({id:@user.id,name:@user.name,email:@user.email,admin:@user.admin})
 
                 render json:{user:@user,token:token},status:200
 
@@ -48,9 +75,19 @@ class UserController < ApplicationController
     private
 
     def user_params
+       
+        params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:zipCode,:neighborhood)
+        
 
-        params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:cep,:neighborhood)
-    
+    end
+
+    def user_params_admin
+
+        params[:password] = rand(1000000).to_i.to_s
+        params[:firstTime] = true
+
+        params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:zipCode,:neighborhood,:firstTime)
+
     end
 
 end
