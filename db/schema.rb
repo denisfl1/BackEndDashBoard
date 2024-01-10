@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_08_184221) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_09_222228) do
   create_table "doctors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "specialty"
@@ -28,6 +28,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_184221) do
     t.string "password_digest", null: false
     t.boolean "admin", default: false
     t.string "email", null: false
+    t.string "zidCode"
+    t.string "adress"
+    t.string "neighborhood"
+    t.string "adressNumber"
   end
 
 end
