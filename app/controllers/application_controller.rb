@@ -50,7 +50,7 @@ class ApplicationController < ActionController::API
         if decode_token
             user = decode_token[0]["id"]
             @user = User.find_by(id:user).admin?
-           
+       
         end
 
     end
@@ -65,7 +65,7 @@ class ApplicationController < ActionController::API
 
     def authorize_admin
 
-        render json:{message:"Você não é um administrador!"},status:401 unless authorized_user
+        render json:{message:"Você não é um administrador!"},status:401 unless check_admin
 
     end
   

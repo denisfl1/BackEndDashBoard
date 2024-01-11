@@ -78,7 +78,7 @@ before_action :authorize_admin, only:[:register_admin]
 
             if @user && @user.firstTime?
 
-                @user.update(password:params[:password])
+                @user.update(password:params[:password],firstTime:false)
 
                 @user = User.find_by(email:user_params[:email])
 
@@ -99,7 +99,7 @@ before_action :authorize_admin, only:[:register_admin]
 
     def user_params_admin
 
-        params[:password] = rand(1000000).to_i.to_s
+        params[:password] = params[:cpf][0,5]
         params[:firstTime] = true
 
         params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:zipCode,:neighborhood,:firstTime)
