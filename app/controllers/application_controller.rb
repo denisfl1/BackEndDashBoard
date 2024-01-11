@@ -65,7 +65,7 @@ class ApplicationController < ActionController::API
 
     def authorize_admin
 
-        render json:{message:"Você não está autenticado"},status:401 unless authorized_user
+        render json:{message:"Você não é um administrador!"},status:401 unless authorized_user
 
     end
   

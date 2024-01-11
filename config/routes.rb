@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   post "/registerAdmin"  => "user#register_admin"
   post "/login" => "user#login"
   post "/newdoctor" => "doctor#createDoctor"
+  put "/createPassword" => "user#change_Password"
 
 end

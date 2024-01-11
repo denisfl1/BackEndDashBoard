@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-
+before_action :authorize_admin, only:[:register_admin]
 
     def register   
     
@@ -59,7 +59,7 @@ class UserController < ApplicationController
             @user = User.find_by(email:user_params[:email])
 
             if @user && @user.authenticate(user_params[:password])
-                token = encode_Token({id:@user.id,name:@user.name,email:@user.email,admin:@user.admin})
+                token = encode_Token({id:@user.id,name:@user.name,email:@user.email,admin:@user.admin,firstTime:@user.firstTime})
 
                 render json:{user:@user,token:token},status:200
 
@@ -71,6 +71,22 @@ class UserController < ApplicationController
 
         end
 
+
+        def change_Password
+
+            @user = User.find_by(email:user_params[:email])
+
+            if @user && @user.firstTime?
+
+                @user.update(password:params[:password])
+
+                @user = User.find_by(email:user_params[:email])
+
+                render json:{user:@user},status:200
+
+            end
+
+        end
 
     private
 
