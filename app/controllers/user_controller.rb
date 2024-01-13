@@ -72,6 +72,15 @@ before_action :authorize_admin, only:[:register_admin]
         end
 
 
+        def get_Users
+
+            @user = User.all
+
+            render json:@user,status:200
+
+        end
+
+
         def change_Password
 
             @user = User.find_by(email:user_params[:email])
@@ -85,6 +94,26 @@ before_action :authorize_admin, only:[:register_admin]
                 render json:{user:@user},status:200
 
             end
+
+        end
+
+
+        def delete_User
+
+            @user = User.find_by(id:user_params[:id])
+
+            if @user
+
+                @user.destroy
+
+                render json: "Apagado com sucesso",status:200
+
+            else
+
+                render json: "Usuário não encontrado",status:404
+
+            end
+
 
         end
 

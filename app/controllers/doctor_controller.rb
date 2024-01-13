@@ -1,5 +1,6 @@
 class DoctorController < ApplicationController
-before_action :authorize ,only:[:getDoctors]
+before_action :authorize ,only:[:get_Doctors]
+before_action :authorize_admin ,only:[:delete_Doctor]
 
     def createDoctor
         
@@ -51,13 +52,33 @@ before_action :authorize ,only:[:getDoctors]
           
     end
 
-        def getDoctors
+        def get_Doctors
 
             search = Doctor.all
 
             render json:search,status: 200
 
         end
+
+
+        def delete_Doctor
+
+            @doctor = Doctor.find_by(id:params[:id])
+
+            if @doctor
+
+                @doctor.destroy
+                
+                render json:"Apagado com sucesso",status:200
+
+            else
+
+                render json:"Usuário não encontrado",status:404
+
+            end
+
+        end
+
 
         private
         def user_params
@@ -67,16 +88,14 @@ before_action :authorize ,only:[:getDoctors]
         end
 
         private
-
         def randomCRM
 
-            rand(1000).to_i
+            rand(10000000).to_i
 
         end
 
 
         private
-
         def incrementID
             result = []
             count = 1
@@ -89,9 +108,10 @@ before_action :authorize ,only:[:getDoctors]
                 result
         end
 
+        private
         def randomNumber
 
-          rand(100000000).to_i
+         rand(* 1000000000).to_i
 
         end
 

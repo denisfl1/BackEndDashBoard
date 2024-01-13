@@ -65,7 +65,7 @@ class ApplicationController < ActionController::API
 
     def authorize_admin
 
-        render json:{message:"Você não é um administrador!"},status:401 unless check_admin
+        render json:"Você não é um administrador!",status:401 unless check_admin
 
     end
   
