@@ -73,10 +73,58 @@ before_action :authorize_admin, only:[:register_admin]
 
 
         def get_Users
+     
+    
+            if check_admin
+                
+                @user = User.all  
+                render json:@user,status:200
 
-            @user = User.all
+            else
 
-            render json:@user,status:200
+                @user = User.find_by(id:authorized_user)
+                render json:[@user],status:200
+
+            end
+        end
+
+
+        def get_User
+    
+            @user = User.find_by(id:params[:id])
+
+
+            if @user 
+
+                render json:@user,status:200
+
+            else
+
+                render json:"Usuário não encontrado",status:404
+
+            end
+
+        end
+
+
+        def edit_User
+
+            @user = User.find_by(id:params[:id])
+
+            
+
+            if @user
+
+                @user.update(name:params[:name],email:params[:email],cpf:params[:cpf],contact_number:params[:contact_number],zipCode:params[:zipCode],adress:params[:adress],neighborhood:params[:neighborhood],number_adress:params[:number_adress])
+
+
+                render json:"Atualizado com Sucesso",status:200
+
+            else
+
+                render json:"Usuário não encontrado",status:404
+
+            end
 
         end
 
@@ -100,7 +148,7 @@ before_action :authorize_admin, only:[:register_admin]
 
         def delete_User
 
-            @user = User.find_by(id:user_params[:id])
+            @user = User.find_by(id:params[:id])
 
             if @user
 
@@ -118,7 +166,6 @@ before_action :authorize_admin, only:[:register_admin]
         end
 
     private
-
     def user_params
        
         params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:zipCode,:neighborhood)
@@ -126,12 +173,14 @@ before_action :authorize_admin, only:[:register_admin]
 
     end
 
+
+    private
     def user_params_admin
 
         params[:password] = params[:cpf][0,5]
         params[:firstTime] = true
 
-        params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:zipCode,:neighborhood,:firstTime)
+        params.permit(:name,:email,:password,:cpf,:adress,:number_adress,:contact_number,:zipCode,:neighborhood,:firstTime)
 
     end
 
