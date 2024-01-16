@@ -3,19 +3,32 @@ class ScheduleController < ApplicationController
 
         def get_schedules
 
-        @schedules = Schedule.all
+        @schedules = Schedule.where(specialty: params[:specialty], hour: params[:timeSchedule], date: params[:date])
+       
+        crms = @schedules.map {|data| data.crm}
 
-        if  @schedules
+        @doctor = Doctor.where(specialty: params[:specialty]).reject{|data|crms.include?(data[:crm])}
+        
+        if @doctor[0]
 
-            render json:@schedules,status:200
-
+          render json:@doctor,status:200
+   
         else
 
-            render json:"Items não encontrados",status:404
+          render json: "Não há disponibilidade",status:404
 
         end
 
     end
+
+         def CreateSchedules
+
+           @NewSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:hour],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+
+           render json: "Criado com sucesso!",status:200
+
+         end
+    
 
 
 end
