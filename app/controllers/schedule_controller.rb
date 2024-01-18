@@ -23,7 +23,7 @@ class ScheduleController < ApplicationController
 
          def CreateSchedules
 
-           @NewSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:hour],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+           @NewSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
 
            render json: "Criado com sucesso!",status:200
 
