@@ -24,12 +24,17 @@ class ScheduleController < ApplicationController
          def CreateSchedules
 
             search = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule])
+            search1 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
 
 
             if search[0]
 
                 render json: "Agendamento já existe!",status:404
+            
+            elsif search1[0]
                 
+                render json: "Selecione outro horário!",status:404
+
             else
 
             newSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
