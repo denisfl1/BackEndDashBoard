@@ -23,9 +23,20 @@ class ScheduleController < ApplicationController
 
          def CreateSchedules
 
-           newSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+            search = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule])
 
-           render json: "Agendado com sucesso!",status:200
+
+            if search[0]
+
+                render json: "Agendamento já existe!",status:404
+                
+            else
+
+            newSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+
+                render json: "Agendado com sucesso!",status:200
+
+            end
 
          end
     
