@@ -84,14 +84,35 @@ before_action :authorize_admin ,only:[:delete_Doctor]
 
         end
 
+        def edit_Doctor
+
+        
+            doctor = Doctor.find_by(id:params[:id])
+
+            if doctor
+                
+                doctor.update(name:params[:name],specialty:params[:specialty],crm:params[:crm],email:params[:email],number:params[:number])
+
+                render json:"Alterado com Sucesso!",status:200
+
+            else 
+
+                render json:"Usuário não encontrado",status:404
+
+            end
+
+          
+
+        end
+
 
         def delete_Doctor
 
-            @doctor = Doctor.find_by(id:params[:id])
+            doctor = Doctor.find_by(id:params[:id])
 
-            if @doctor
+            if doctor
 
-                @doctor.destroy
+                doctor.destroy
                 
                 render json:"Apagado com sucesso",status:200
 

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   post "/newschedule" => "schedule#CreateSchedules"
   put "/createPassword" => "user#change_Password"
   put "/edituser" => "user#edit_User"
+  put "/editdoctor" => "doctor#edit_Doctor"
   delete "/deletedoctor/:id" => "doctor#delete_Doctor"
   delete "/deleteuser/:id" => "user#delete_User"
 
