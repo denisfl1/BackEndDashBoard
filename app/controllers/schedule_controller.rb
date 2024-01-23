@@ -62,4 +62,62 @@ class ScheduleController < ApplicationController
 
          end
 
+
+         def GetSchedule_One    
+
+            getschedules = Schedule.find_by(id:params[:id])
+
+            if getschedules
+
+            render json: getschedules, status:200
+
+            else 
+                
+            render json: "Agendamento não encontrado",status:404
+
+            end
+
+         end
+
+
+         def Edit_Schedule
+
+            search = Schedule.find_by(id:params[:id])
+
+
+            if search 
+
+                search.update(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+
+                render json:"Alterado com Sucesso!",status:200
+
+            else
+
+                render json:"Agendamento não encontrado",status:404
+
+            end
+
+
+         end
+
+
+         def Delete_Schedules
+
+            search = Schedule.find_by(id:params[:id])
+
+            if search
+
+                search.destroy
+
+                render json:"Apagado com Sucesso!",status:200
+
+            else
+
+                render json:"Agendamento não econtrado",status:404
+
+            end
+
+
+         end
+
 end

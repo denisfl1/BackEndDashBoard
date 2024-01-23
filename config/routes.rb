@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get "/getUsers" => "user#get_Users"
   get "/getuser/:id" => "user#get_User"
   get "/getdoctor/:id" => "doctor#get_Doctor"
-  get "/getsc" => "schedule#GetSchedules"
+  get "/getschedules" => "schedule#GetSchedules"
+  get "/findschedules/:id" => "schedule#GetSchedule_One"
   post "/findschedules" => "schedule#find_schedule"
   post "/register"  => "user#register"
   post "/registerAdmin" => "user#register_admin"
@@ -18,5 +19,6 @@ Rails.application.routes.draw do
   put "/editdoctor" => "doctor#edit_Doctor"
   delete "/deletedoctor/:id" => "doctor#delete_Doctor"
   delete "/deleteuser/:id" => "user#delete_User"
+  delete "/deleteSchedules/:id" => "schedule#Delete_Schedules"
 
 end
