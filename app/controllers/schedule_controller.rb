@@ -25,6 +25,7 @@ class ScheduleController < ApplicationController
 
             search = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule])
             search1 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+            search2 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
 
 
             if search[0]
@@ -34,6 +35,11 @@ class ScheduleController < ApplicationController
             elsif search1[0]
                 
                 render json: "Selecione outro horário!",status:404
+
+
+            elsif search2[0]
+
+                render json: "Selecione outra especialidade!",status:404
 
             else
 

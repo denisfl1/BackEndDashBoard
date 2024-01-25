@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "/getdoctor/:id" => "doctor#get_Doctor"
   get "/getschedules" => "schedule#GetSchedules"
   get "/findschedules/:id" => "schedule#GetSchedule_One"
+  post "/generateDoctor" => "doctor#generate_Doctor"
   post "/findschedules" => "schedule#find_schedule"
   post "/register"  => "user#register"
   post "/registerAdmin" => "user#register_admin"

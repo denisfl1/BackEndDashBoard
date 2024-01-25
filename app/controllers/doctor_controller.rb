@@ -30,9 +30,15 @@ before_action :authorize_admin ,only:[:delete_Doctor]
 
 
           values.each do |spec,name| 
-
+        
           name.each do |nome|
-            Doctor.create(id:incrementID,name:nome,specialty:spec,crm:randomCRM,email:"email@hotmail.com",number:randomNumber)  
+           
+            if nome.include?("Dr.")
+                genner = "Masculino"
+            elsif nome.include?("Dra.")
+                genner = "Feminino"
+            end
+            Doctor.create(id:incrementID,name:nome,specialty:spec,crm:randomCRM,email:"email@hotmail.com",number:randomNumber,sex:genner)  
           end
           
           end
@@ -90,8 +96,8 @@ before_action :authorize_admin ,only:[:delete_Doctor]
             doctor = Doctor.find_by(id:params[:id])
 
             if doctor
-                
-                doctor.update(name:params[:name],specialty:params[:specialty],crm:params[:crm],email:params[:email],number:params[:number])
+
+                doctor.update(name:params[:name],specialty:params[:specialty],crm:params[:crm],email:params[:email],number:params[:number],sex:params[:sex])
 
                 render json:"Alterado com Sucesso!",status:200
 
@@ -128,7 +134,7 @@ before_action :authorize_admin ,only:[:delete_Doctor]
         private
         def user_params
 
-            params.permit(:name,:specialty,:email,:crm,:number)
+            params.permit(:name,:specialty,:email,:crm,:number,:sex)
         
         end
 
