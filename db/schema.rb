@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_014701) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_26_204839) do
   create_table "doctors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "specialty"
@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_014701) do
     t.string "patient_Email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "Active"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

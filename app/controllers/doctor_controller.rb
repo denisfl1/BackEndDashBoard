@@ -1,6 +1,6 @@
 class DoctorController < ApplicationController
-before_action :authorize ,only:[:get_Doctors]
-before_action :authorize_admin ,only:[:delete_Doctor]
+before_action :authorize ,only:[]
+before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:delete_Doctor,:edit_Doctor]
 
 
     def generate_Doctor
@@ -11,7 +11,7 @@ before_action :authorize_admin ,only:[:delete_Doctor]
             "Ortopedia": ["Dr. Ricardo Martins", "Dra. Isabel Almeida", "Dr. André Sousa", "Dra. Carolina Santos"],
             "Dermatologia": ["Dra. Gabriela Pereira", "Dr. Pedro Rocha", "Dra. Lucas Oliveira", "Dr. Beatriz Silva"],
             "Neurologia": ["Dra. Marta Costa", "Dr. Rodrigo Pereira", "Dra. Clara Santos", "Dr. André Silva"],
-            "GinecologiaObstetricia": ["Dra. Laura Oliveira", "Dr. Paulo Mendonça", "Dra. Mariana Rocha", "Dr. Gustavo Alves"],
+            "Ginecologia Obstetricia": ["Dra. Laura Oliveira", "Dr. Paulo Mendonça", "Dra. Mariana Rocha", "Dr. Gustavo Alves"],
             "Oftalmologia": ["Dr. João Mendes", "Dra. Ana Lima", "Dr. Miguel Rocha", "Dra. Beatriz Almeida"],
             "Pediatria": ["Dra. Carolina Santos", "Dr. Luís Oliveira", "Dra. Sofia Costa", "Dr. Eduardo Almeida"],
             "Psiquiatria": ["Dr. André Santos", "Dra. Mariana Lima", "Dr. Guilherme Costa", "Dra. Isabel Rocha"],

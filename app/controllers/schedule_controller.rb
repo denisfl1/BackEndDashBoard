@@ -3,7 +3,7 @@ class ScheduleController < ApplicationController
 
         def find_schedule
 
-        schedules = Schedule.where(specialty: params[:specialty], hour: params[:timeSchedule], date: params[:date])
+        schedules = Schedule.where(specialty: params[:specialty], hour: params[:timeSchedule], date: params[:date]).reject{|data|!data.status.include?("Active")}
        
         crms = schedules.map {|data| data.crm}
 
@@ -23,10 +23,10 @@ class ScheduleController < ApplicationController
 
          def CreateSchedules
 
-            search = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule])
-            search1 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
-            search2 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
-
+            search = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule]).reject{|data| !data.status.include?("Active")}
+            search1 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}
+            search2 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}
+            searchSpec = search1.select{|data|data.specialty == params[:specialty]}
 
             if search[0]
 
@@ -34,12 +34,22 @@ class ScheduleController < ApplicationController
             
             elsif search1[0]
                 
-                render json: "Selecione outro horário!",status:404
+                if searchSpec[0]
+
+                    render json: "#{params[:specialty]} já marcado!",status:404
 
 
+                elsif  search1[0]
+
+                    render json: "Selecione outro horário!",status:404
+
+                end
+
+               
+                                  
             elsif search2[0]
 
-                render json: "Selecione outra especialidade!",status:404
+                render json: "#{params[:specialty]} já marcado!",status:404
 
             else
 
@@ -88,10 +98,34 @@ class ScheduleController < ApplicationController
 
          def Edit_Schedule
 
+
+            myID = params[:id].to_i
+            state = "Active"
+
             search = Schedule.find_by(id:params[:id])
+            search1 = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule]).select{|data| data.id != myID}
+              
+            search2 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).select{|data| data.id != myID}
+            search3 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).select{|data| data.id != myID}
 
 
-            if search 
+            if search1[0]
+                
+               render json: "Agendamento já existe!",status:404
+            
+
+            elsif search2[0]
+                
+                render json: "Selecione outro horário!",status:404
+
+
+            elsif search3[0]
+             
+                render json:"#{params[:specialty]} já marcado!",status:404
+
+
+
+            elsif search
 
                 search.update(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
 

@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-before_action :authorize_admin, only:[:register_admin]
+before_action :authorize_admin, only:[:register_admin,:get_Users]
 
     def register   
     
@@ -32,7 +32,7 @@ before_action :authorize_admin, only:[:register_admin]
 
             if search
     
-                return render json:{error:"Usuário já existe"},status:404
+                return render json:"Usuário já existe",status:404
     
             end
             
