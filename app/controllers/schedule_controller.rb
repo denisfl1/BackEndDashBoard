@@ -103,10 +103,11 @@ class ScheduleController < ApplicationController
             state = "Active"
 
             search = Schedule.find_by(id:params[:id])
-            search1 = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule]).select{|data| data.id != myID}
+            search1 = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
               
-            search2 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).select{|data| data.id != myID}
-            search3 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).select{|data| data.id != myID}
+            search2 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
+            search3 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
+            searchSpec = search2.select{|data|data.specialty == params[:specialty]}
 
 
             if search1[0]
@@ -116,7 +117,16 @@ class ScheduleController < ApplicationController
 
             elsif search2[0]
                 
-                render json: "Selecione outro horário!",status:404
+                if searchSpec[0]
+
+                    render json: "#{params[:specialty]} já marcado!",status:404
+
+                elsif search2[0]
+
+                    render json: "#{params[:specialty]} marcado nesse horário!",status:404
+
+                end
+              
 
 
             elsif search3[0]
