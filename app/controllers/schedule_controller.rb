@@ -171,8 +171,9 @@ class ScheduleController < ApplicationController
 
          def Validate_Schedule
 
-            
+            search = Schedule.find_by(id:params[:id])
 
+            
 
          end
 
