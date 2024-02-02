@@ -177,7 +177,8 @@ class ScheduleController < ApplicationController
 
                 mySchedule.update(status:"Finished")
 
-                render json:"Validado com sucesso",status:200
+                render json:"Validado com sucesso!",status:200
+
 
             end
 
