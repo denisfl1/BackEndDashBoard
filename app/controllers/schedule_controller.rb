@@ -1,5 +1,5 @@
 class ScheduleController < ApplicationController
-
+        
 
         def find_schedule
 
@@ -98,9 +98,7 @@ class ScheduleController < ApplicationController
 
          def Edit_Schedule
 
-
             myID = params[:id].to_i
-            state = "Active"
 
             search = Schedule.find_by(id:params[:id])
             search1 = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
