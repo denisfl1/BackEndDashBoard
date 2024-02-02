@@ -168,4 +168,12 @@ class ScheduleController < ApplicationController
 
          end
 
+
+         def Validate_Schedule
+
+            
+
+
+         end
+
 end
