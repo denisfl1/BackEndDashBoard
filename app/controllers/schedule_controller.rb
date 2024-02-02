@@ -171,9 +171,15 @@ class ScheduleController < ApplicationController
 
          def Validate_Schedule
 
-            search = Schedule.find_by(id:params[:id])
+            mySchedule = Schedule.find_by(id:params[:id])
 
-            
+            if mySchedule
+
+                mySchedule.update(status:"Finished")
+
+                render json:"Validado com sucesso",status:200
+
+            end
 
          end
 

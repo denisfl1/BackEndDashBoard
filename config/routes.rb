@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   put "/edituser" => "user#edit_User"
   put "/editdoctor" => "doctor#edit_Doctor"
   put "/editscheduling" => "schedule#Edit_Schedule"
+  put "/validateSchedule" => "schedule#Validate_Schedule"
   delete "/deletedoctor/:id" => "doctor#delete_Doctor"
   delete "/deleteuser/:id" => "user#delete_User"
   delete "/deleteSchedules/:id" => "schedule#Delete_Schedules"
