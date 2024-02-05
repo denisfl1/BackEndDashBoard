@@ -173,18 +173,6 @@ class ScheduleController < ApplicationController
 
          def Validate_Schedule
 
-            # mySchedule = Schedule.find_by(id:params[:id])
-
-
-            # if mySchedule
-
-            #     mySchedule.update(status:"Finished")
-
-            #     render json:"Validado com sucesso!",status:200
-
-
-            # end
-
             searchSchedules = Schedule.find_by(id:params[:id])
             qr_Reader = params[:data]
 
@@ -204,33 +192,28 @@ class ScheduleController < ApplicationController
                 data.status]}[0]
 
 
-
-                # join_schedule_List = schedule_List
-
                  schedule_Scanned = [qr_Reader].map{|data|data.values}[0]
                  schedule_Scanned[8] = DateTime.parse(schedule_Scanned[8]).strftime("%Y-%m-%d %H:%M:%S UTC")
 
                  schedule_Scanned.delete_at(9)
 
-
-                #  schedule_Scanned.delete_at(8)
-
-
-                #  joinB_schedule_Scanned = schedule_Scanned
-
+                schedule_List[8] = schedule_List[8].strftime("%Y-%m-%d %H:%M:%S UTC")
 
                  join_schedule_List = schedule_List
                  joinB_schedule_Scanned = schedule_Scanned
 
-                #  verify = join_schedule_List == joinB_schedule_Scanned
 
-                verify= []
+                # verify = []
 
                 for i in 0...join_schedule_List.size
 
                   if  join_schedule_List[i] != joinB_schedule_Scanned[i]
 
-                    verify.push(i)
+                    verify = true
+
+                  else
+
+                    verify = false
 
                   end
 
@@ -238,23 +221,9 @@ class ScheduleController < ApplicationController
 
                 puts   join_schedule_List[8]
                 puts   joinB_schedule_Scanned[8]
-                    # if verify.size !=  join_schedule_List.size
-
-                        render json:  {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
-
-                    # end
-
-                # if   join_schedule_List
-                # puts join_schedule_List
-                # print "\n"
-                # puts joinB_schedule_Scanned
-
-                # puts verify
-                # else
 
 
-
-                #  end
+                render json:  {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
 
 
             end
