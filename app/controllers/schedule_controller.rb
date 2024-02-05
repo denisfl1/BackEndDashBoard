@@ -228,7 +228,7 @@ class ScheduleController < ApplicationController
 
                 for i in 0...join_schedule_List.size
 
-                  if  join_schedule_List[i] == joinB_schedule_Scanned[i]
+                  if  join_schedule_List[i] != joinB_schedule_Scanned[i]
 
                     verify.push(i)
 
