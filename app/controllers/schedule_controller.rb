@@ -1,18 +1,19 @@
 class ScheduleController < ApplicationController
-        
+    require "json"
+    require 'set'
 
         def find_schedule
 
         schedules = Schedule.where(specialty: params[:specialty], hour: params[:timeSchedule], date: params[:date]).reject{|data|!data.status.include?("Active")}
-       
+
         crms = schedules.map {|data| data.crm}
 
         doctor = Doctor.where(specialty: params[:specialty]).reject{|data|crms.include?(data[:crm])}
-        
+
         if doctor[0]
 
           render json:doctor,status:200
-   
+
         else
 
           render json: "Não há disponibilidade",status:404
@@ -31,9 +32,9 @@ class ScheduleController < ApplicationController
             if search[0]
 
                 render json: "Agendamento já existe!",status:404
-            
+
             elsif search1[0]
-                
+
                 if searchSpec[0]
 
                     render json: "#{params[:specialty]} já marcado!",status:404
@@ -45,8 +46,8 @@ class ScheduleController < ApplicationController
 
                 end
 
-               
-                                  
+
+
             elsif search2[0]
 
                 render json: "#{params[:specialty]} já marcado!",status:404
@@ -60,7 +61,7 @@ class ScheduleController < ApplicationController
             end
 
          end
-    
+
 
          def GetSchedules
 
@@ -70,8 +71,8 @@ class ScheduleController < ApplicationController
 
             render json: getschedules, status:200
 
-            else 
-                
+            else
+
             render json: "Items não encontrados",status:404
 
             end
@@ -79,7 +80,7 @@ class ScheduleController < ApplicationController
          end
 
 
-         def GetSchedule_One    
+         def GetSchedule_One
 
             getschedules = Schedule.find_by(id:params[:id])
 
@@ -87,8 +88,8 @@ class ScheduleController < ApplicationController
 
             render json: getschedules, status:200
 
-            else 
-                
+            else
+
             render json: "Agendamento não encontrado",status:404
 
             end
@@ -102,19 +103,19 @@ class ScheduleController < ApplicationController
 
             search = Schedule.find_by(id:params[:id])
             search1 = Schedule.where(crm:params[:crm],date:params[:date],hour:params[:timeSchedule]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
-              
+
             search2 = Schedule.where(date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
             search3 = Schedule.where(date:params[:date],specialty: params[:specialty],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
             searchSpec = search2.select{|data|data.specialty == params[:specialty]}
 
 
             if search1[0]
-                
+
                render json: "Agendamento já existe!",status:404
-            
+
 
             elsif search2[0]
-                
+
                 if searchSpec[0]
 
                     render json: "#{params[:specialty]} já marcado!",status:404
@@ -124,11 +125,11 @@ class ScheduleController < ApplicationController
                     render json: "#{params[:specialty]} marcado nesse horário!",status:404
 
                 end
-              
+
 
 
             elsif search3[0]
-             
+
                 render json:"#{params[:specialty]} já marcado!",status:404
 
 
@@ -171,17 +172,82 @@ class ScheduleController < ApplicationController
 
          def Validate_Schedule
 
-            mySchedule = Schedule.find_by(id:params[:id])
+            # mySchedule = Schedule.find_by(id:params[:id])
 
-            if mySchedule
 
-                mySchedule.update(status:"Finished")
+            # if mySchedule
 
-                render json:"Validado com sucesso!",status:200
+            #     mySchedule.update(status:"Finished")
+
+            #     render json:"Validado com sucesso!",status:200
+
+
+            # end
+
+            searchSchedules = Schedule.find_by(id:params[:id])
+            qr_Reader = params[:data]
+
+            if  searchSchedules
+
+                schedule_List = [searchSchedules].map{|data|
+               [
+                data.id,
+                data.doctor,
+                data.specialty,
+                data.crm,
+                data.date,
+                data.hour,
+                data.patient_Name,
+                data.patient_Email,
+                data.created_at,
+                data.status]}[0]
+
+                # join_schedule_List = schedule_List
+
+                 schedule_Scanned = [qr_Reader].map{|data|data.values}[0]
+                 schedule_Scanned.delete_at(9)
+                #  schedule_Scanned.delete_at(8)
+                #  joinB_schedule_Scanned = schedule_Scanned
+
+
+                 join_schedule_List = schedule_List.to_set
+                 joinB_schedule_Scanned = schedule_Scanned.to_set
+
+
+                 verify =   join_schedule_List == joinB_schedule_Scanned
+
+                # for i in 0...join_schedule_List.size
+
+                # #   if  join_schedule_List[1] == joinB_schedule_Scanned[1]
+
+                #     verify.push(join_schedule_List[i] == joinB_schedule_Scanned[i])
+
+                # #   end
+
+                # end
+
+                    # if verify.size !=  join_schedule_List.size
+
+                        render json:  {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
+
+                    # end
+
+                # if   join_schedule_List
+                # puts join_schedule_List
+                # print "\n"
+                # puts joinB_schedule_Scanned
+
+                # puts verify
+                # else
+
+
+
+                #  end
 
 
             end
 
-         end
+
+        end
 
 end
