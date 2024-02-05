@@ -203,8 +203,6 @@ class ScheduleController < ApplicationController
                  joinB_schedule_Scanned = schedule_Scanned
 
 
-                # verify = []
-
                 for i in 0...join_schedule_List.size
 
                   if  join_schedule_List[i] != joinB_schedule_Scanned[i]
@@ -218,10 +216,6 @@ class ScheduleController < ApplicationController
                   end
 
                 end
-
-                puts   join_schedule_List[8]
-                puts   joinB_schedule_Scanned[8]
-
 
                 render json:  {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
 
