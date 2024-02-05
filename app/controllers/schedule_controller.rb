@@ -1,6 +1,7 @@
 class ScheduleController < ApplicationController
     require "json"
     require 'set'
+    require 'date'
 
         def find_schedule
 
@@ -202,30 +203,41 @@ class ScheduleController < ApplicationController
                 data.created_at,
                 data.status]}[0]
 
+
+
                 # join_schedule_List = schedule_List
 
                  schedule_Scanned = [qr_Reader].map{|data|data.values}[0]
+                 schedule_Scanned[8] = DateTime.parse(schedule_Scanned[8]).strftime("%Y-%m-%d %H:%M:%S UTC")
+
                  schedule_Scanned.delete_at(9)
+
+
                 #  schedule_Scanned.delete_at(8)
+
+
                 #  joinB_schedule_Scanned = schedule_Scanned
 
 
-                 join_schedule_List = schedule_List.to_set
-                 joinB_schedule_Scanned = schedule_Scanned.to_set
+                 join_schedule_List = schedule_List
+                 joinB_schedule_Scanned = schedule_Scanned
 
+                #  verify = join_schedule_List == joinB_schedule_Scanned
 
-                 verify =   join_schedule_List == joinB_schedule_Scanned
+                verify= []
 
-                # for i in 0...join_schedule_List.size
+                for i in 0...join_schedule_List.size
 
-                # #   if  join_schedule_List[1] == joinB_schedule_Scanned[1]
+                  if  join_schedule_List[i] == joinB_schedule_Scanned[i]
 
-                #     verify.push(join_schedule_List[i] == joinB_schedule_Scanned[i])
+                    verify.push(i)
 
-                # #   end
+                  end
 
-                # end
+                end
 
+                puts   join_schedule_List[8]
+                puts   joinB_schedule_Scanned[8]
                     # if verify.size !=  join_schedule_List.size
 
                         render json:  {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200

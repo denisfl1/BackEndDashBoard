@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_26_204839) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_05_195238) do
   create_table "doctors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "specialty"
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_204839) do
     t.string "doctor"
     t.string "specialty"
     t.string "crm"
-    t.date "date"
+    t.string "date"
     t.string "hour"
     t.string "patient_Name"
     t.string "patient_Email"
