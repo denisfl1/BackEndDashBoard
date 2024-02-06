@@ -242,13 +242,13 @@ class ScheduleController < ApplicationController
 
                 schedule_List[8] = schedule_List[8].strftime("%Y-%m-%d %H:%M:%S UTC")
 
-                 join_schedule_List = schedule_List
-                 joinB_schedule_Scanned = schedule_Scanned
+                 schedule_List = schedule_List
+                 schedule_Scanned = schedule_Scanned
 
 
-                for i in 0...join_schedule_List.size
+                for i in 0... schedule_List.size
 
-                  if  join_schedule_List[i] != joinB_schedule_Scanned[i]
+                  if  schedule_List[i] != schedule_Scanned[i]
 
                     verify = true
 
@@ -260,7 +260,7 @@ class ScheduleController < ApplicationController
 
                 end
 
-                render json: {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
+                render json: {data1: schedule_List,data2: schedule_Scanned,data3:verify} ,status:200
 
             else
 

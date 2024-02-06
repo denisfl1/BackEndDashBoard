@@ -1,8 +1,8 @@
 class UserController < ApplicationController
 before_action :authorize_admin, only:[:register_admin,:get_Users]
 
-    def register   
-    
+    def register
+
         search = User.find_by(email:user_params[:email])
 
         if search
@@ -13,7 +13,7 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
 
         @user = User.create(user_params)
 
-      
+
         if @user.valid?
 
             token = encode_Token({user_id:@user.id})
@@ -22,7 +22,7 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
         else
             render json:{error:"Usuário ou senha inválidos"},
             status: 404
-        
+
         end
     end
 
@@ -31,29 +31,29 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
             search = User.find_by(email:user_params[:email])
 
             if search
-    
+
                 return render json:"Usuário já existe",status:404
-    
+
             end
-            
-            
+
+
             @user2 = User.create(user_params_admin)
 
-      
+
             if @user2.valid?
-    
+
                 token = encode_Token({user:@user2})
                 render json:"Criado com sucesso",status:200
-    
+
             else
                 render json:{error:"Usuário ou senha inválidos"},
                 status: 404
-            
+
             end
 
         end
 
-       
+
         def login
 
             @user = User.find_by(email:user_params[:email])
@@ -73,11 +73,11 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
 
 
         def get_Users
-     
-    
+
+
             if check_admin
-                
-                @user = User.all  
+
+                @user = User.all
                 render json:@user,status:200
 
             else
@@ -90,11 +90,11 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
 
 
         def get_User
-    
+
             @user = User.find_by(id:params[:id])
 
 
-            if @user 
+            if @user
 
                 render json:@user,status:200
 
@@ -111,11 +111,14 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
 
             @user = User.find_by(id:params[:id])
 
-            
+
 
             if @user
 
-                @user.update(name:params[:name],email:params[:email],cpf:params[:cpf],contact_number:params[:contact_number],zipCode:params[:zipCode],adress:params[:adress],neighborhood:params[:neighborhood],number_adress:params[:number_adress])
+                @user.update(name:params[:name],email:params[:email],
+                cpf:params[:cpf],contact_number:params[:contact_number],
+                zipCode:params[:zipCode],adress:params[:adress],
+                neighborhood:params[:neighborhood],number_adress:params[:number_adress])
 
 
                 render json:"Atualizado com Sucesso",status:200
@@ -167,9 +170,9 @@ before_action :authorize_admin, only:[:register_admin,:get_Users]
 
     private
     def user_params
-       
+
         params.permit(:name,:email,:password,:adress,:number_adress,:contact_number,:zipCode,:neighborhood)
-        
+
 
     end
 
