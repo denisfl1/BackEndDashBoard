@@ -1,11 +1,13 @@
 class ScheduleController < ApplicationController
     require "json"
-    require 'set'
     require 'date'
 
         def find_schedule
 
-        schedules = Schedule.where(specialty: params[:specialty], hour: params[:timeSchedule], date: params[:date]).reject{|data|!data.status.include?("Active")}
+        schedules = Schedule.where(
+         specialty: params[:specialty],
+         hour: params[:timeSchedule],
+         date: params[:date]).reject{|data|!data.status.include?("Active")}
 
         crms = schedules.map {|data| data.crm}
 
@@ -25,13 +27,26 @@ class ScheduleController < ApplicationController
 
          def CreateSchedules
 
-            search = Schedule.where(crm:params[:crm],date:params[:date],
-            hour:params[:timeSchedule]).reject{|data| !data.status.include?("Active")}
-            search1 = Schedule.where(date:params[:date],
-            hour:params[:timeSchedule],patient_Name:params[:patient_Name],
-            patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}
-            search2 = Schedule.where(date:params[:date],specialty: params[:specialty],
-            patient_Name:params[:patient_Name],patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}
+            search = Schedule.where(
+            crm:params[:crm],
+            date:params[:date],
+            hour:params[:timeSchedule]).reject{|data|
+            !data.status.include?("Active")}
+
+            search1 = Schedule.where(
+            date:params[:date],
+            hour:params[:timeSchedule],
+            patient_Name:params[:patient_Name],
+            patient_Email:params[:patient_Email]).reject{|data|
+            !data.status.include?("Active")}
+
+            search2 = Schedule.where(
+            date:params[:date],
+            specialty: params[:specialty],
+            patient_Name:params[:patient_Name],
+            patient_Email:params[:patient_Email]).reject{|data|
+            !data.status.include?("Active")}
+
             searchSpec = search1.select{|data|data.specialty == params[:specialty]}
 
             if search[0]
@@ -59,7 +74,14 @@ class ScheduleController < ApplicationController
 
             else
 
-            newSchedule = Schedule.create(doctor:params[:doctor],specialty:params[:specialty],crm:params[:crm],date:params[:date],hour:params[:timeSchedule],patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
+            newSchedule = Schedule.create(
+            doctor:params[:doctor],
+            specialty:params[:specialty],
+            crm:params[:crm],
+            date:params[:date],
+            hour:params[:timeSchedule],
+            patient_Name:params[:patient_Name],
+            patient_Email:params[:patient_Email])
 
                 render json: "Agendado com sucesso!",status:200
 
@@ -107,15 +129,26 @@ class ScheduleController < ApplicationController
             myID = params[:id].to_i
 
             search = Schedule.find_by(id:params[:id])
-            search1 = Schedule.where(crm:params[:crm],
-            date:params[:date],hour:params[:timeSchedule]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
+            search1 = Schedule.where(
+            crm:params[:crm],
+            date:params[:date],
+            hour:params[:timeSchedule]).reject{|data|
+            !data.status.include?("Active")}.select{|data| data.id != myID}
 
-            search2 = Schedule.where(date:params[:date],
-            hour:params[:timeSchedule],patient_Name:params[:patient_Name]
-            ,patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
-            search3 = Schedule.where(date:params[:date],specialty: params[:specialty],
+            search2 = Schedule.where(
+            date:params[:date],
+            hour:params[:timeSchedule],
             patient_Name:params[:patient_Name],
-            patient_Email:params[:patient_Email]).reject{|data| !data.status.include?("Active")}.select{|data| data.id != myID}
+            patient_Email:params[:patient_Email]).reject{|data|
+            !data.status.include?("Active")}.select{|data| data.id != myID}
+
+            search3 = Schedule.where(
+            date:params[:date],
+            specialty: params[:specialty],
+            patient_Name:params[:patient_Name],
+            patient_Email:params[:patient_Email]).reject{|data|
+            !data.status.include?("Active")}.select{|data| data.id != myID}
+
             searchSpec = search2.select{|data|data.specialty == params[:specialty]}
 
 
@@ -227,8 +260,11 @@ class ScheduleController < ApplicationController
 
                 end
 
-                render json:  {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
+                render json: {data1: join_schedule_List,data2:joinB_schedule_Scanned,data3:verify} ,status:200
 
+            else
+
+                render json: "Agendamento não encontrado!",status:200
 
             end
 
