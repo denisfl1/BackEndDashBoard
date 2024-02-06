@@ -218,7 +218,7 @@ class ScheduleController < ApplicationController
          def Validate_Schedule
 
             searchSchedules = Schedule.find_by(id:params[:id])
-            qr_Reader = params[:data]
+            qr_Reader = params[:resul]
 
             if  searchSchedules
 
@@ -247,27 +247,43 @@ class ScheduleController < ApplicationController
                  schedule_Scanned = schedule_Scanned
 
 
-                for i in 0... schedule_List.size
+                 for i in 0... (schedule_List.size)- 1
 
-                  if  schedule_List[i] != schedule_Scanned[i]
+                    if  schedule_List[i] != schedule_Scanned[i]
 
-                    verify = true
+                      verify = true
 
-                  else
-
-                    verify = false
+                    end
 
                   end
 
+
+                if verify
+
+                    render json:"Agendamento inválido",status: 404
+
+                else
+
+                    if schedule_List[9] != schedule_Scanned[9]
+
+                        render json:"Agendamento já finalizado",status: 404
+
+                    else
+
+                        searchSchedules.update(status:"Finished")
+
+                        render json:"Validado com Sucesso!",status: 200
+
+                    end
+
                 end
 
-                render json: {data1: schedule_List,data2: schedule_Scanned,data3:verify} ,status:200
 
-            else
+                else
 
-                render json: "Agendamento não encontrado!",status:404
+                  render json: "Agendamento não encontrado!",status:404
 
-            end
+              end
 
 
         end
