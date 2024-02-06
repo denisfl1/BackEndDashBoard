@@ -265,7 +265,7 @@ class ScheduleController < ApplicationController
 
             else
 
-                render json: "Agendamento não encontrado!",status:200
+                render json: "Agendamento não encontrado!",status:404
 
             end
 

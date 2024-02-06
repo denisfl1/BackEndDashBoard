@@ -29,18 +29,22 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
           }
 
 
-          values.each do |spec,name| 
-        
+          values.each do |spec,name|
+
           name.each do |nome|
-           
+
             if nome.include?("Dr.")
                 genner = "Masculino"
             elsif nome.include?("Dra.")
                 genner = "Feminino"
             end
-            Doctor.create(id:incrementID,name:nome,specialty:spec,crm:randomCRM,email:"email@hotmail.com",number:randomNumber,sex:genner)  
+            Doctor.create(
+            id:incrementID,name:nome,specialty:spec,
+            crm:randomCRM,email:"email@hotmail.com",
+            number:randomNumber,sex:genner
+            )
           end
-          
+
           end
 
           render json:"Criado com Sucesso!",status: 200
@@ -49,8 +53,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
 
 
     def createDoctor
-        
-      
+
 
           @user = Doctor.create(user_params)
 
@@ -63,7 +66,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
             status: 404
 
           end
-          
+
     end
 
         def get_Doctors
@@ -79,7 +82,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
             doctor = Doctor.find_by(id:params[:id])
 
             if doctor
-            
+
                 render json:doctor,status:200
 
             else
@@ -92,22 +95,25 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
 
         def edit_Doctor
 
-        
+
             doctor = Doctor.find_by(id:params[:id])
 
             if doctor
 
-                doctor.update(name:params[:name],specialty:params[:specialty],crm:params[:crm],email:params[:email],number:params[:number],sex:params[:sex])
+                doctor.update(
+                name:params[:name],specialty:params[:specialty],
+                crm:params[:crm],email:params[:email],
+                number:params[:number],sex:params[:sex])
 
                 render json:"Alterado com Sucesso!",status:200
 
-            else 
+            else
 
                 render json:"Usuário não encontrado",status:404
 
             end
 
-          
+
 
         end
 
@@ -119,7 +125,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
             if doctor
 
                 doctor.destroy
-                
+
                 render json:"Apagado com sucesso",status:200
 
             else
@@ -135,7 +141,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
         def user_params
 
             params.permit(:name,:specialty,:email,:crm,:number,:sex)
-        
+
         end
 
         private
