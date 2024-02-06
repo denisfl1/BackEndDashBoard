@@ -11,7 +11,7 @@ class ScheduleController < ApplicationController
 
         crms = schedules.map {|data| data.crm}
 
-        doctor = Doctor.where(specialty: params[:specialty]).reject{|data|crms.include?(data[:crm])}
+        doctor = Doctor.where(specialty:params[:specialty]).reject{|data|crms.include?(data[:crm])}
 
         if doctor[0]
 
@@ -129,18 +129,19 @@ class ScheduleController < ApplicationController
             myID = params[:id].to_i
 
             search = Schedule.find_by(id:params[:id])
+
             search1 = Schedule.where(
             crm:params[:crm],
             date:params[:date],
             hour:params[:timeSchedule]).reject{|data|
-            !data.status.include?("Active")}.select{|data| data.id != myID}
+            !data.status.include?("Active")}.select{|data|data.id != myID}
 
             search2 = Schedule.where(
             date:params[:date],
             hour:params[:timeSchedule],
             patient_Name:params[:patient_Name],
             patient_Email:params[:patient_Email]).reject{|data|
-            !data.status.include?("Active")}.select{|data| data.id != myID}
+            !data.status.include?("Active")}.select{|data|data.id != myID}
 
             search3 = Schedule.where(
             date:params[:date],
