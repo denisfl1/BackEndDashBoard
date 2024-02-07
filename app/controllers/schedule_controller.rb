@@ -94,13 +94,27 @@ class ScheduleController < ApplicationController
 
             getschedules = Schedule.all
 
-            if getschedules
 
-            render json: getschedules, status:200
+            if check_admin
+
+                if  getschedules
+
+                render json: getschedules, status:200
+
+                 else
+
+            render json: "Items não encontrados",status:404
+
+                end
+
 
             else
 
-            render json: "Items não encontrados",status:404
+                findMyUser  = User.find_by(id:authorized_user)
+                find_schedule = Schedule.where(
+
+                )
+                render json:
 
             end
 
@@ -218,7 +232,7 @@ class ScheduleController < ApplicationController
          def Validate_Schedule
 
             searchSchedules = Schedule.find_by(id:params[:id])
-            qr_Reader = params[:resul]
+            qr_Reader = params[:result]
 
             if  searchSchedules
 
