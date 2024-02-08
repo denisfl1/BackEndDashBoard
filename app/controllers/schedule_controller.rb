@@ -114,15 +114,15 @@ class ScheduleController < ApplicationController
                 name = findMyUser.name
                 email = findMyUser.email
 
-                find_schedule = Schedule.where(name:name,email:email)
+                find_schedule = Schedule.where(patient_Name:name,patient_Email:email)
 
-                if find_schedule
+                if find_schedule[0]
 
                 render json: find_schedule,status:200
 
                 else
 
-                render json: "Não existem agendamentos",status:404
+                render json: email ,status:404
 
                 end
 
