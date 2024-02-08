@@ -122,7 +122,7 @@ class ScheduleController < ApplicationController
 
                 else
 
-                render json: email ,status:404
+                render json:"Não há agendamentos marcados",status:404
 
                 end
 
