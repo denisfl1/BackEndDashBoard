@@ -1,5 +1,4 @@
 class DoctorController < ApplicationController
-before_action :authorize ,only:[]
 before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:delete_Doctor,:edit_Doctor]
 
 
