@@ -1,5 +1,6 @@
 class UserController < ApplicationController
-before_action :authorize_admin, only:[:register_admin,:get_Users]
+before_action :authorize_admin, only:[:register_admin]
+before_action :authorized_user, only:[:get_Users]
 
     def register
 

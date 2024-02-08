@@ -1,6 +1,8 @@
 class ScheduleController < ApplicationController
     require "json"
     require 'date'
+    before_action :authorized_user, only:[:GetSchedule_One,:GetSchedules]
+    before_action :authorize_admin, only:[:Edit_Schedule,:Delete_Schedules,:find_schedule]
 
         def find_schedule
 
@@ -103,7 +105,7 @@ class ScheduleController < ApplicationController
 
                  else
 
-                render json: "Items não encontrados",status:404
+                render json: "Não há agendamentos",status:404
 
                 end
 
