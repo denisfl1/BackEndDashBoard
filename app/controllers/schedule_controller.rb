@@ -90,7 +90,7 @@ class ScheduleController < ApplicationController
          end
 
 
-         def GetSchedules
+        def GetSchedules
 
             getschedules = Schedule.all
 
@@ -103,7 +103,7 @@ class ScheduleController < ApplicationController
 
                  else
 
-            render json: "Items não encontrados",status:404
+                render json: "Items não encontrados",status:404
 
                 end
 
@@ -111,14 +111,24 @@ class ScheduleController < ApplicationController
             else
 
                 findMyUser  = User.find_by(id:authorized_user)
-                find_schedule = Schedule.where(
+                name = findMyUser.name
+                email = findMyUser.email
 
-                )
-                render json:
+                find_schedule = Schedule.where(name:name,email:email)
+
+                if find_schedule
+
+                render json: find_schedule,status:200
+
+                else
+
+                render json: "Não existem agendamentos",status:404
+
+                end
 
             end
 
-         end
+        end
 
 
          def GetSchedule_One
