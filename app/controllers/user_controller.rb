@@ -126,41 +126,52 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
 
         def edit_User
 
-        if check_admin
+            if check_admin
 
-            @user = User.find_by(id:params[:id])
+                @user = User.find_by(id:params[:id])
 
-            if @user
+                if @user
 
-                @user.update(name:params[:name],email:params[:email],
-                cpf:params[:cpf],contact_number:params[:contact_number],
-                zipCode:params[:zipCode],adress:params[:adress],
-                neighborhood:params[:neighborhood],number_adress:params[:number_adress])
-
-
-                render json:"Atualizado com Sucesso",status:200
-
-            else
-
-                render json:"Usuário não encontrado",status:404
-
-            end
+                    @user.update(name:params[:name],email:params[:email],
+                    cpf:params[:cpf],contact_number:params[:contact_number],
+                    zipCode:params[:zipCode],adress:params[:adress],
+                    neighborhood:params[:neighborhood],number_adress:params[:number_adress])
 
 
-        else
+                    render json:"Atualizado com Sucesso",status:200
 
-            @user = User.find_by(id:authorized_user)
+                else
 
-            if @user
+                    render json:"Usuário não encontrado",status:404
 
-                @user.update(name:params[:name],email:params[:email],
-                cpf:params[:cpf],contact_number:params[:contact_number],
-                zipCode:params[:zipCode],adress:params[:adress],
-                neighborhood:params[:neighborhood],number_adress:params[:number_adress])
+                end
 
             else
 
-                render json:"Usuário não encontrado",status:404
+                @user = User.find_by(id:authorized_user)
+
+                if @user
+
+                    @user.update(name:params[:name],email:params[:email],
+                    cpf:params[:cpf],contact_number:params[:contact_number],
+                    zipCode:params[:zipCode],adress:params[:adress],
+                    neighborhood:params[:neighborhood],number_adress:params[:number_adress]
+
+                    )
+
+                    if @user.password != params[:password]
+
+                    @user.update(password:params[:password])
+
+                    end
+
+                    render json:"Atualizado com sucesso!",status:200
+
+                else
+
+                    render json:"Usuário não encontrado",status:404
+
+                end
 
             end
 
