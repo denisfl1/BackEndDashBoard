@@ -92,16 +92,32 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
 
         def get_User
 
-            @user = User.find_by(id:params[:id])
+            if check_admin
+                @user = User.find_by(id:params[:id])
 
-
-            if @user
+                if @user
 
                 render json:@user,status:200
 
+                else
+
+                 render json:"Usuário não encontrado",status:404
+
+                end
+
             else
 
+                @user = User.find_by(id:authorized_user)
+
+                if @user
+
+                render json:@user,status:200
+
+                else
+
                 render json:"Usuário não encontrado",status:404
+
+                end
 
             end
 
@@ -111,8 +127,6 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
         def edit_User
 
             @user = User.find_by(id:params[:id])
-
-
 
             if @user
 
