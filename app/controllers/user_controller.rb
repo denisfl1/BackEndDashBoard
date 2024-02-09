@@ -126,6 +126,8 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
 
         def edit_User
 
+        if check_admin
+
             @user = User.find_by(id:params[:id])
 
             if @user
@@ -137,6 +139,24 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
 
 
                 render json:"Atualizado com Sucesso",status:200
+
+            else
+
+                render json:"Usuário não encontrado",status:404
+
+            end
+
+
+        else
+
+            @user = User.find_by(id:authorized_user)
+
+            if @user
+
+                @user.update(name:params[:name],email:params[:email],
+                cpf:params[:cpf],contact_number:params[:contact_number],
+                zipCode:params[:zipCode],adress:params[:adress],
+                neighborhood:params[:neighborhood],number_adress:params[:number_adress])
 
             else
 
