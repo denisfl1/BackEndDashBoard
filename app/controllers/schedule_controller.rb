@@ -64,7 +64,7 @@ class ScheduleController < ApplicationController
 
                 elsif  search1[0]
 
-                    render json: "#{params[:specialty]} marcado neste horário!",status:404
+                    render json: "#{search1[0].specialty} marcado neste horário!",status:404
 
                 end
 
