@@ -203,7 +203,7 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
 
                 @user.destroy
 
-                render json: "Apagado com sucesso",status:200
+                render json: "Apagado com sucesso!",status:200
 
             else
 
@@ -213,6 +213,78 @@ before_action :authorized_user, only:[:get_Users,:edit_User]
 
 
         end
+
+        def generate_user
+
+            names = [
+                "Aurora Silva",
+                "Pedro Santos",
+                "Bianca Oliveira",
+                "Lucas Fernandes",
+                "Mariana Costa",
+                "Rafael Pereira",
+                "Isabela Almeida",
+                "Thiago Rodrigues",
+                "Camila Souza",
+                "Gabriel Lima",
+                "Larissa Gonçalves",
+                "Mateus Castro",
+                "Giovanna Carvalho",
+                "Bruno Nunes",
+                "Juliana Martins",
+                            ]
+
+
+                names.each do |datas|
+
+                    emails = datas.gsub(/\s+/, "").downcase!+'@hotmail.com'
+                    neighborhood = "Lorem Ipsum"
+                    number_adress1 = rand(* 1000)
+                    rands = rand(100000000000).to_s
+
+                    User.create(
+                    name:datas,
+                    email:emails,
+                    password:"12345",
+                    zipCode:"12345-678",
+                    adress:"Av.Lorem Ipsum",
+                    neighborhood:"Lorem Ipsum",
+                    number_adress: number_adress1,
+                    contact_number:random_Number,
+                    cpf:rands,admin:0)
+
+                end
+
+                render json: "Criado som sucesso",status:200
+
+
+        end
+
+
+
+    private
+
+
+    def random_Number
+        rands = ''
+
+        count = 0
+
+        while rands.size < 9
+          count += 1
+          rands = rand(1000000000).to_s
+
+
+          break if rands.size == 9
+        end
+
+
+       rands
+
+    end
+
+
+
 
     private
     def user_params

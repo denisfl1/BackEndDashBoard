@@ -59,12 +59,12 @@ class ScheduleController < ApplicationController
 
                 if searchSpec[0]
 
-                    render json: "#{params[:specialty]} já marcado!",status:404
+                    render json: "#{params[:specialty]} já agendado!",status:404
 
 
                 elsif  search1[0]
 
-                    render json: "#{search1[0].specialty} marcado neste horário!",status:404
+                    render json: "#{search1[0].specialty} agendado neste Horário!",status:404
 
                 end
 
@@ -72,7 +72,7 @@ class ScheduleController < ApplicationController
 
             elsif search2[0]
 
-                render json: "#{params[:specialty]} já marcado!",status:404
+                render json: "#{params[:specialty]} já agendado!",status:404
 
             else
 
@@ -188,11 +188,11 @@ class ScheduleController < ApplicationController
 
                 if searchSpec[0]
 
-                    render json: "#{params[:specialty]} já marcado!",status:404
+                    render json: "#{params[:specialty]} já agendado!",status:404
 
                 elsif search2[0]
 
-                    render json: "#{params[:specialty]} marcado nesse horário!",status:404
+                    render json: "#{params[:specialty]} agendado nesse Horário!",status:404
 
                 end
 
@@ -200,7 +200,7 @@ class ScheduleController < ApplicationController
 
             elsif search3[0]
 
-                render json:"#{params[:specialty]} já marcado!",status:404
+                render json:"#{params[:specialty]} já agendado!",status:404
 
 
             elsif search
@@ -209,7 +209,7 @@ class ScheduleController < ApplicationController
                 crm:params[:crm],date:params[:date],hour:params[:timeSchedule],
                 patient_Name:params[:patient_Name],patient_Email:params[:patient_Email])
 
-                render json:"Alterado com Sucesso!",status:200
+                render json:"Alterado com sucesso!",status:200
 
             else
 
@@ -292,7 +292,7 @@ class ScheduleController < ApplicationController
 
                     if schedule_List[9] != schedule_Scanned[9]
 
-                        render json:"Agendamento já finalizado",status: 404
+                        render json:"Agendamento já finalizado!",status: 404
 
                     else
 
@@ -311,6 +311,39 @@ class ScheduleController < ApplicationController
 
               end
 
+
+        end
+
+
+        def cancellScheduling
+
+        searchSchedule = Schedule.find_by(id:params[:id])
+        searchUser = User.find_by(id:authorized_user)
+
+            if check_admin || searchUser
+
+                if  searchSchedule
+
+                            if searchSchedule.status == "Active"
+
+                                searchSchedule.update(status:"Canceled")
+
+                                render json: "Cancelado com sucesso!", status:200
+
+                            else
+
+                                render json: "Agendamento não Ativo!", status:404
+
+                            end
+
+                else
+
+                    render json: "Agendamento não encontrado!", status:404
+
+                end
+
+
+             end
 
         end
 

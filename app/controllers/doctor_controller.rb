@@ -5,7 +5,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
     def generate_Doctor
 
           values ={
-            "ClínicaGeral": ["Dr. Carlos Silva", "Dra. Ana Costa", "Dr. José Oliveira", "Dra. Maria Santos"],
+            "Clínica Geral": ["Dr. Carlos Silva", "Dra. Ana Costa", "Dr. José Oliveira", "Dra. Maria Santos"],
             "Cardiologia": ["Dr. Sofia Pereira", "Dr. Roberto Fernandes", "Dra. João Lima", "Dr. Laura Mendes"],
             "Ortopedia": ["Dr. Ricardo Martins", "Dra. Isabel Almeida", "Dr. André Sousa", "Dra. Carolina Santos"],
             "Dermatologia": ["Dra. Gabriela Pereira", "Dr. Pedro Rocha", "Dra. Lucas Oliveira", "Dr. Beatriz Silva"],
@@ -18,7 +18,7 @@ before_action :authorize_admin ,only:[:get_Doctors,:get_Doctor,:createDoctor,:de
             "Otorrinolaringologia": ["Dr. João Oliveira", "Dra. Clara Alves", "Dr. Rafael Lima", "Dra. Sofia Rocha"],
             "Radiologia": ["Dra. Isabel Almeida", "Dr. Pedro Costa", "Dra. Marta Lima", "Dr. Lucas Pereira"],
             "Urologia": ["Dr. André Rocha", "Dra. Carolina Costa", "Dr. Gustavo Almeida", "Dra. Mariana Silva"],
-            "CirurgiaGeral": ["Dr. Rodrigo Almeida", "Dra. Rita Silva", "Dr. Eduardo Rocha", "Dra. Laura Costa"],
+            "Cirurgia Geral": ["Dr. Rodrigo Almeida", "Dra. Rita Silva", "Dr. Eduardo Rocha", "Dra. Laura Costa"],
             "Hematologia": ["Dra. Gabriela Costa", "Dr. Rafael Pereira", "Dra. Marta Almeida", "Dr. Luís Santos"],
             "Dermatologia": ["Dra. Sofia Rocha", "Dr. João Pereira", "Dra. Beatriz Lima", "Dr. Gustavo Costa"],
             "Gastroenterologia": ["Dr. Eduardo Lima", "Dra. Mariana Costa", "Dr. Luís Rocha", "Dra. Carolina Almeida"],
