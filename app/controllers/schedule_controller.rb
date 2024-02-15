@@ -192,7 +192,7 @@ class ScheduleController < ApplicationController
 
                 elsif search2[0]
 
-                    render json: "#{params[:specialty]} agendado nesse Horário!",status:404
+                    render json: "#{search2[0].specialty} agendado nesse Horário!",status:404
 
                 end
 
