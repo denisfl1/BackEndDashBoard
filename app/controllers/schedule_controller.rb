@@ -64,7 +64,7 @@ class ScheduleController < ApplicationController
 
                 elsif  search1[0]
 
-                    render json: "#{search1[0].specialty} agendado neste Horário!",status:404
+                    render json: "#{search1[0].specialty} agendado neste horário!",status:404
 
                 end
 
@@ -192,7 +192,7 @@ class ScheduleController < ApplicationController
 
                 elsif search2[0]
 
-                    render json: "#{search2[0].specialty} agendado nesse Horário!",status:404
+                    render json: "#{search2[0].specialty} agendado neste horário!",status:404
 
                 end
 
