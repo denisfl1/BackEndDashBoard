@@ -1,8 +1,8 @@
 class ScheduleController < ApplicationController
     require "json"
     require 'date'
-    before_action :authorized_user, only:[:GetSchedule_One,:GetSchedules]
-    before_action :authorize_admin, only:[:Edit_Schedule,:Delete_Schedules,:find_schedule]
+    before_action :authorized_user, only:[:GetSchedule_One,:GetSchedules,:cancellScheduling]
+    before_action :authorize_admin, only:[:Edit_Schedule,:Delete_Schedules,:find_schedule,:CreateSchedules,:Validate_Schedule]
 
         def find_schedule
 
@@ -317,10 +317,8 @@ class ScheduleController < ApplicationController
 
         def cancellScheduling
 
-        searchSchedule = Schedule.find_by(id:params[:id])
-        searchUser = User.find_by(id:authorized_user)
+                searchSchedule = Schedule.find_by(id:params[:id])
 
-            if check_admin || searchUser
 
                 if  searchSchedule
 
@@ -340,10 +338,8 @@ class ScheduleController < ApplicationController
 
                     render json: "Agendamento não encontrado!", status:404
 
+
                 end
-
-
-             end
 
         end
 
