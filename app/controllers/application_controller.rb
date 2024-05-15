@@ -15,18 +15,17 @@ class ApplicationController < ActionController::API
         if auth_header
 
             token = auth_header.split(' ').last
-            token
 
             begin
                 JWT.decode(token,"secret",true,algorithm:'HS256')
-            
+
             rescue JWT::DecodeError
 
                 nil
 
             end
-            
-            
+
+
     end
 
     end
@@ -38,7 +37,7 @@ class ApplicationController < ActionController::API
         if decode_token
             user = decode_token[0]["id"]
             @user = User.find_by(id:user)
-           
+
         end
 
     end
@@ -50,7 +49,7 @@ class ApplicationController < ActionController::API
         if decode_token
             user = decode_token[0]["id"]
             @user = User.find_by(id:user).admin?
-       
+
         end
 
     end
@@ -68,6 +67,6 @@ class ApplicationController < ActionController::API
         render json:"Você não é um administrador!",status:401 unless check_admin
 
     end
-  
+
 
 end

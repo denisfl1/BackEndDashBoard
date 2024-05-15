@@ -1,7 +1,7 @@
 class ScheduleController < ApplicationController
     require "json"
     require 'date'
-    before_action :authorized_user, only:[:GetSchedule_One,:GetSchedules,:cancellScheduling]
+    before_action :authorize, only:[:GetSchedule_One,:GetSchedules,:cancellScheduling]
     before_action :authorize_admin, only:[:Edit_Schedule,:Delete_Schedules,:find_schedule,:CreateSchedules,:Validate_Schedule]
 
         def find_schedule

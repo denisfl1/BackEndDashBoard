@@ -1,6 +1,6 @@
 class UserController < ApplicationController
 before_action :authorize_admin, only:[:register_admin,:delete_User]
-before_action :authorized_user, only:[:get_Users,:edit_User]
+before_action :authorize, only:[:get_Users,:edit_User]
 
     def register
 
